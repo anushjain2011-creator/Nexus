@@ -1,17 +1,18 @@
-from .base import Skill
-from .executor import SkillExecutor
+from .engine import SkillEngine
 from .loader import SkillLoader
 from .manager import SkillManager, skill_manager
+from .models import SkillDefinition, SkillResult
 from .registry import SkillRegistry, skill_registry
-from .validator import SkillValidator
+
+__version__ = "1.0.0"
 
 __all__ = [
-    "Skill",
-    "SkillExecutor",
+    "SkillDefinition",
+    "SkillResult",
     "SkillLoader",
-    "SkillManager",
-    "skill_manager",
     "SkillRegistry",
     "skill_registry",
-    "SkillValidator",
+    "SkillEngine",
+    "SkillManager",
+    "skill_manager",
 ]
