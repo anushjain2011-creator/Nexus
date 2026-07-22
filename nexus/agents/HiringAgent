@@ -1,9 +1,11 @@
 """
-HiringAgent — "Who do we need?"
+HiringAgent — "Who should we hire?"
 
-Responsible for identifying hiring needs, defining roles,
-creating job descriptions, evaluating candidates, and
-building hiring plans that align with project goals.
+Responsible for workforce planning, recruiting, candidate evaluation,
+interview planning, and onboarding recommendations.
+
+The HiringAgent coordinates the TalentManager instead of talking
+directly to recruiting providers.
 """
 
 from __future__ import annotations
@@ -15,13 +17,16 @@ from nexus.core.event_bus import EventBus
 from nexus.core.registry import register_agent
 from nexus.core.world_model import WorldModel
 
+from nexus.talent.manager import TalentManager
+
 
 @register_agent
 class HiringAgent(BaseAgent):
     name = "hiring_agent"
+
     description = (
-        "You determine staffing needs, define roles, evaluate candidates, "
-        "and recommend hiring strategies for successful project delivery."
+        "You identify staffing needs, recruit candidates, evaluate resumes, "
+        "recommend interviews, and manage the hiring process."
     )
 
     def __init__(
@@ -32,83 +37,144 @@ class HiringAgent(BaseAgent):
     ):
         super().__init__(world, bus, **kwargs)
 
+        self.talent = TalentManager()
+
+    #
+    # Workforce Planning
+    #
+
     def identify_hiring_needs(self) -> AgentResponse:
-        """
-        Determine additional staffing requirements.
-        """
 
         return self.run(
-            "Review the current project plan, implementation roadmap, "
-            "team capacity, and workload. Identify any additional roles "
-            "required to successfully complete the project."
+            "Review the project. Determine whether additional people "
+            "are needed based on workload, deadlines, required skills, "
+            "budget, and project objectives."
         )
 
-    def define_role(self) -> AgentResponse:
-        """
-        Create role definitions.
-        """
+    def define_roles(self) -> AgentResponse:
 
         return self.run(
-            "Create detailed role definitions for each recommended "
-            "position. Include responsibilities, required skills, "
-            "experience, qualifications, and expected outcomes."
+            "Create detailed role definitions for every recommended hire. "
+            "Include responsibilities, skills, experience, qualifications, "
+            "and expected outcomes."
         )
 
-    def create_job_description(self) -> AgentResponse:
-        """
-        Generate job descriptions.
-        """
+    #
+    # Recruiting
+    #
+
+    def search_candidates(
+        self,
+        role: str,
+        location: str | None = None,
+        skills: list[str] | None = None,
+    ):
+
+        return self.talent.search_candidates(
+            role=role,
+            location=location,
+            skills=skills,
+        )
+
+    def import_resumes(
+        self,
+        resumes: list,
+    ):
+
+        return self.talent.import_resumes(resumes)
+
+    #
+    # Evaluation
+    #
+
+    def score_candidates(
+        self,
+        candidates,
+        role: str,
+    ):
+
+        return self.talent.score_candidates(
+            candidates,
+            role,
+        )
+
+    def shortlist_candidates(
+        self,
+        candidates,
+        limit: int = 5,
+    ):
+
+        return self.talent.shortlist(
+            candidates,
+            limit,
+        )
+
+    def recommend_candidate(
+        self,
+        candidates,
+    ):
+
+        return self.talent.best_candidate(candidates)
+
+    #
+    # Interviews
+    #
+
+    def generate_interview_questions(
+        self,
+        role: str,
+    ) -> AgentResponse:
 
         return self.run(
-            "Generate professional job descriptions for all open "
-            "positions, including responsibilities, qualifications, "
-            "preferred experience, and reporting structure."
+            f"Generate interview questions for a {role}. "
+            "Include technical questions, behavioral questions, "
+            "culture-fit questions, and evaluation criteria."
         )
 
-    def evaluate_candidates(self) -> AgentResponse:
-        """
-        Assess candidate suitability.
-        """
+    def schedule_interview(
+        self,
+        candidate,
+    ):
+
+        return self.talent.schedule_interview(candidate)
+
+    #
+    # Offers
+    #
+
+    def recommend_offer(
+        self,
+        candidate,
+    ) -> AgentResponse:
 
         return self.run(
-            "Review available candidate information and evaluate each "
-            "candidate against the project's staffing requirements. "
-            "Highlight strengths, weaknesses, and overall fit."
+            f"Prepare a hiring recommendation for {candidate}. "
+            "Estimate salary range, onboarding priorities, "
+            "potential risks, and hiring justification."
         )
 
-    def recommend_hiring_plan(self) -> AgentResponse:
-        """
-        Develop a hiring roadmap.
-        """
+    #
+    # Onboarding
+    #
 
-        return self.run(
-            "Develop a hiring plan that prioritizes critical positions, "
-            "defines recruitment timelines, estimates hiring costs, and "
-            "identifies recruitment risks."
-        )
+    def onboard_candidate(
+        self,
+        candidate,
+    ):
 
-    def forecast_staffing(self) -> AgentResponse:
-        """
-        Forecast future staffing needs.
-        """
+        return self.talent.onboard(candidate)
 
-        return self.run(
-            "Forecast staffing requirements across the remaining project "
-            "timeline. Identify when new hires or contractors may be "
-            "needed and estimate the impact on delivery."
-        )
+    #
+    # Events
+    #
 
     def handle_event(
         self,
         description: str,
     ) -> AgentResponse:
-        """
-        Respond to hiring-related events.
-        """
 
         return self.run(
-            f"A staffing event occurred: '{description}'. "
-            "Determine how this affects hiring priorities, recruitment "
-            "plans, team capacity, and project delivery. Recommend "
-            "appropriate actions."
+            f"A hiring event occurred: '{description}'. "
+            "Determine how it affects recruiting priorities, "
+            "staffing levels, project delivery, and future hiring."
         )
