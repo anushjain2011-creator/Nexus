@@ -1,3 +1,4 @@
+
 """
 BaseAgent — the shared contract every Nexus agent implements.
 
