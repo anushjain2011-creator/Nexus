@@ -1,8 +1,6 @@
-from __future__ import annotations
-
 from openai import OpenAI
 
-from memory.embedding import EmbeddingProvider
+from .base import EmbeddingProvider
 
 
 class OpenAIEmbedding(EmbeddingProvider):
