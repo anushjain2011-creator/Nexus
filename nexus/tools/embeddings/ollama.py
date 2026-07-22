@@ -1,25 +1,23 @@
-from __future__ import annotations
-
 import requests
 
-from memory.embedding import EmbeddingProvider
+from .base import EmbeddingProvider
 
 
 class OllamaEmbedding(EmbeddingProvider):
 
     def __init__(
         self,
-        model: str = "nomic-embed-text",
-        host: str = "http://localhost:11434",
+        host="http://localhost:11434",
+        model="nomic-embed-text",
     ):
-
-        self.model = model
 
         self.host = host
 
-    def embed(self, text: str) -> list[float]:
+        self.model = model
 
-        response = requests.post(
+    def embed(self, text: str):
+
+        r = requests.post(
             f"{self.host}/api/embeddings",
             json={
                 "model": self.model,
@@ -27,6 +25,6 @@ class OllamaEmbedding(EmbeddingProvider):
             },
         )
 
-        response.raise_for_status()
+        r.raise_for_status()
 
-        return response.json()["embedding"]
+        return r.json()["embedding"]
