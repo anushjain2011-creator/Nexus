@@ -1,0 +1,84 @@
+/* ============================================================
+   NEXUS DASHBOARD — design tokens
+   Direction: mission control for execution. Dark instrument panel,
+   monospace data readouts, a live cascading event ticker as the
+   signature element (the thing that makes "connected system" visible
+   instead of just claimed).
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #0b0e14;
+  --panel: #12161f;
+  --panel-raised: #161b26;
+  --hairline: #232937;
+  --text: #e7eaf0;
+  --text-muted: #7c8598;
+  --text-faint: #4d5567;
+
+  --live: #3ed6b5;
+  --live-dim: rgba(62, 214, 181, 0.12);
+  --risk: #f0a94e;
+  --risk-dim: rgba(240, 169, 78, 0.12);
+  --critical: #f0546b;
+  --critical-dim: rgba(240, 84, 107, 0.12);
+  --info: #6ea8fe;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--hairline) 1px, transparent 1px),
+    linear-gradient(90deg, var(--hairline) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--live-dim);
+  color: var(--live);
+}
+
+/* focus visibility, kept even in a dark technical UI */
+:focus-visible {
+  outline: 2px solid var(--live);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
