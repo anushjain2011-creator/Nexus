@@ -1,0 +1,48 @@
+writing:
+  description: Professional writing.
+  prompt: |
+    Write professionally.
+
+    {{input}}
+
+email:
+  description: Draft emails.
+  prompt: |
+    Write an email.
+
+    {{input}}
+
+presentation:
+  description: Presentation creation.
+  prompt: |
+    Create presentation content.
+
+    {{input}}
+
+translation:
+  description: Translate text.
+  prompt: |
+    Translate.
+
+    {{input}}
+
+meeting_notes:
+  description: Meeting summaries.
+  prompt: |
+    Summarize the meeting.
+
+    {{input}}
+
+documentation:
+  description: Documentation writing.
+  prompt: |
+    Create documentation.
+
+    {{input}}
+
+negotiation:
+  description: Communication strategy.
+  prompt: |
+    Plan negotiation.
+
+    {{input}}
