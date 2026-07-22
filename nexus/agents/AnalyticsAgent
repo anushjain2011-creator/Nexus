@@ -25,15 +25,12 @@ class AnalyticsAgent(BaseAgent):
     )
 
     def __init__(
-    self,
-    runtime,
-):
-
-    super().__init__(
-        runtime,
-    )
-
-    self.max_iterations = 10
+        self,
+        world: WorldModel,
+        bus: Optional[EventBus] = None,
+        **kwargs,
+    ):
+        super().__init__(world, bus, **kwargs)
 
     def project_health(self) -> AgentResponse:
         """
