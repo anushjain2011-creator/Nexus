@@ -1,0 +1,48 @@
+workflow:
+  description: Workflow automation.
+  prompt: |
+    Automate this workflow.
+
+    {{input}}
+
+orchestration:
+  description: Coordinate systems.
+  prompt: |
+    Orchestrate this process.
+
+    {{input}}
+
+monitoring:
+  description: Monitoring strategy.
+  prompt: |
+    Build monitoring.
+
+    {{input}}
+
+scheduling:
+  description: Task scheduling.
+  prompt: |
+    Schedule tasks.
+
+    {{input}}
+
+triggers:
+  description: Automation triggers.
+  prompt: |
+    Design triggers.
+
+    {{input}}
+
+approvals:
+  description: Approval workflow.
+  prompt: |
+    Build approval process.
+
+    {{input}}
+
+integrations:
+  description: System integrations.
+  prompt: |
+    Design integrations.
+
+    {{input}}
