@@ -1,16 +1,18 @@
-"""Nexus package."""
+"""
+Nexus — The Execution Operating System
+Core package exposing the agent framework.
+"""
 
-from nexus.core import world_model, event_bus, base_agent, registry
-from nexus.agents import executive_agent, planning_agent, research_agent, finance_agent, risk_agent
+from nexus.core.base_agent import BaseAgent, AgentResponse
+from nexus.core.world_model import WorldModel
+from nexus.core.event_bus import EventBus, Event
 
 __all__ = [
-    "world_model",
-    "event_bus",
-    "base_agent",
-    "registry",
-    "executive_agent",
-    "planning_agent",
-    "research_agent",
-    "finance_agent",
-    "risk_agent",
+    "BaseAgent",
+    "AgentResponse",
+    "WorldModel",
+    "EventBus",
+    "Event",
 ]
+
+__version__ = "0.1.0"
