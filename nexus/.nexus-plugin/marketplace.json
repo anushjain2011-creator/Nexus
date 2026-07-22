@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "packageId": "com.nexus.core",
+  "name": "Nexus",
+  "displayName": "Nexus Autonomous Project OS",
+  "version": "1.0.0",
+  "description": "Autonomous multi-agent project management platform with planning, simulation, analytics, governance, and workflow automation.",
+  "publisher": {
+    "name": "Your Name",
+    "website": "https://github.com/yourname/nexus",
+    "email": "you@example.com"
+  },
+  "repository": "https://github.com/yourname/nexus",
+  "homepage": "https://github.com/yourname/nexus",
+  "documentation": "https://github.com/yourname/nexus/wiki",
+  "license": "MIT",
+  "minimumNexusVersion": "1.0.0",
+  "categories": [
+    "AI",
+    "Automation",
+    "Project Management",
+    "Workflow"
+  ],
+  "keywords": [
+    "agents",
+    "planning",
+    "automation",
+    "simulation",
+    "analytics",
+    "governance",
+    "workflow",
+    "project-management"
+  ],
+  "capabilities": [
+    "Multi-Agent Coordination",
+    "Project Planning",
+    "Risk Management",
+    "Budget Management",
+    "Scenario Simulation",
+    "Scheduling",
+    "Analytics",
+    "Knowledge Management",
+    "Workflow Automation",
+    "Governance"
+  ],
+  "entry": ".nexus-plugin/plugin.json",
+  "install": {
+    "setupScript": "scripts/setup/configure_nexus.py",
+    "requirements": "requirements.txt"
+  },
+  "screenshots": [],
+  "icon": "assets/icon.png",
+  "banner": "assets/banner.png",
+  "pricing": {
+    "type": "free"
+  },
+  "security": {
+    "sandboxed": true,
+    "requiresFilesystem": true,
+    "requiresNetwork": true,
+    "requiresDatabase": true
+  }
+}
