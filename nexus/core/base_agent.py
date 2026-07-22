@@ -28,6 +28,11 @@ from typing import Any, Optional
 
 from nexus.core.world_model import WorldModel
 from nexus.core.event_bus import EventBus
+from pathlib import Path
+
+from nexus.skills import SkillManager
+from nexus.memory.manager import memory_manager
+from nexus.tools import tool_manager
 
 DEFAULT_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 
@@ -91,7 +96,21 @@ class BaseAgent:
             api_key=api_key or os.environ.get("OPENAI_API_KEY"),
             base_url=base_url or os.environ.get("OPENAI_BASE_URL"),
         )
+self.skills = SkillManager(
+            llm=self,
+        )
 
+        self.skills.load(
+            Path(__file__).parent.parent
+            / "skills"
+            / "definitions"
+        )
+
+        self.memory = memory_manager
+
+        self.tool_manager = tool_manager
+
+        self.agent_registry = None
     # ---- override in subclasses -------------------------------------------------
 
     def system_prompt(self) -> str:
@@ -118,7 +137,27 @@ class BaseAgent:
         )
 
     # ---- shared execution flow -------------------------------------------------
+def generate(
+        self,
+        prompt: str,
+    ) -> str:
 
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[
+                {
+                    "role": "system",
+                    "content": self.system_prompt(),
+                },
+                {
+                    "role": "user",
+                    "content": prompt,
+                },
+            ],
+            max_tokens=1500,
+        )
+
+        return response.choices[0].message.content or ""
     def run(self, instruction: str, max_tool_turns: int = 5) -> AgentResponse:
         """Send `instruction` to the model with this agent's system prompt
         and tools, looping through any tool calls until the model produces
@@ -193,3 +232,115 @@ class BaseAgent:
             summary="Max tool turns reached without a final answer.",
             tool_calls=tool_calls_made,
         )
+    def run_skill(
+        self,
+        name: str,
+        **kwargs,
+    ):
+
+        return self.skills.execute(
+            name,
+            **kwargs,
+        )
+
+
+    def use_tool(
+        self,
+        name: str,
+        **kwargs,
+    ):
+
+        return self.tool_manager.execute(
+            name,
+            **kwargs,
+        )
+
+
+    def remember(
+        self,
+        text: str,
+        metadata: dict | None = None,
+    ):
+
+        return self.memory.store(
+            text=text,
+            metadata=metadata or {},
+        )
+
+
+    def recall(
+        self,
+        query: str,
+        limit: int = 5,
+    ):
+
+        return self.memory.search(
+            query=query,
+            limit=limit,
+        )
+
+
+    def set_agent_registry(
+        self,
+        registry,
+    ):
+
+        self.agent_registry = registry
+
+
+    def ask_agent(
+        self,
+        agent_name: str,
+        instruction: str,
+    ):
+
+        if self.agent_registry is None:
+
+            raise RuntimeError(
+                "No Agent Registry configured."
+            )
+
+        agent = self.agent_registry.get(
+            agent_name,
+        )
+
+        if agent is None:
+
+            raise ValueError(
+                f"Unknown agent '{agent_name}'."
+            )
+
+        return agent.run(
+            instruction,
+        )
+
+
+    def publish_event(
+        self,
+        event: str,
+        **payload,
+    ):
+
+        if self.bus:
+
+            self.bus.publish(
+                event,
+                **payload,
+            )
+
+
+    def capabilities(
+        self,
+    ):
+
+        return {
+            "agent": self.name,
+            "skills": len(
+                self.skills.all()
+            ),
+            "tools": len(
+                self.tool_manager.all()
+            ),
+            "memory": True,
+            "collaboration": self.agent_registry is not None,
+        }
