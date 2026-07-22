@@ -1,0 +1,41 @@
+statistics:
+  description: Statistical analysis.
+  prompt: |
+    Perform statistical analysis.
+
+    {{input}}
+
+forecasting:
+  description: Forecast outcomes.
+  prompt: |
+    Forecast future trends.
+
+    {{input}}
+
+reporting:
+  description: Generate reports.
+  prompt: |
+    Create a report.
+
+    {{input}}
+
+visualization:
+  description: Recommend visualizations.
+  prompt: |
+    Recommend charts.
+
+    {{input}}
+
+kpi:
+  description: KPI analysis.
+  prompt: |
+    Analyze KPIs.
+
+    {{input}}
+
+anomaly_detection:
+  description: Detect anomalies.
+  prompt: |
+    Identify anomalies.
+
+    {{input}}
