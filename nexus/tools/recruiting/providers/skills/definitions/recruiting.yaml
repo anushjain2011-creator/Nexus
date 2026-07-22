@@ -1,0 +1,55 @@
+talent_search:
+  description: Find candidates.
+  prompt: |
+    Find candidates matching:
+
+    {{input}}
+
+resume_review:
+  description: Review resumes.
+  prompt: |
+    Evaluate this resume.
+
+    {{input}}
+
+candidate_scoring:
+  description: Score candidates.
+  prompt: |
+    Score this candidate.
+
+    {{input}}
+
+interview:
+  description: Generate interview questions.
+  prompt: |
+    Create interview questions.
+
+    {{input}}
+
+compensation:
+  description: Recommend compensation.
+  prompt: |
+    Recommend salary.
+
+    {{input}}
+
+onboarding:
+  description: Create onboarding plans.
+  prompt: |
+    Build an onboarding plan.
+
+    {{input}}
+
+reference_check:
+  description: Analyze references.
+  prompt: |
+    Review candidate references.
+
+    {{input}}
+
+offer_letter:
+  description: Draft offer letters.
+  prompt: |
+    Create an offer letter.
+
+    {{input}}
