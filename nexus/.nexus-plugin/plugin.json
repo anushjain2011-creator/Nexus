@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "1.0",
+  "id": "com.nexus.core",
+  "name": "Nexus",
+  "displayName": "Nexus Autonomous Project OS",
+  "description": "A multi-agent AI operating system for planning, execution, simulation, governance, and project management.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Your Name",
+    "email": "you@example.com",
+    "url": "https://github.com/yourname/nexus"
+  },
+  "license": "MIT",
+  "entry": "core/registry.py",
+  "python": ">=3.11",
+  "dependencies": [
+    "fastapi",
+    "uvicorn",
+    "pydantic"
+  ],
+  "agents": {
+    "path": "agents"
+  },
+  "skills": {
+    "path": "skills"
+  },
+  "commands": {
+    "path": "commands"
+  },
+  "rules": {
+    "path": "rules"
+  },
+  "hooks": {
+    "path": "hooks/hooks.json"
+  },
+  "contexts": {
+    "path": "contexts"
+  },
+  "prompts": {
+    "path": "prompts"
+  },
+  "worldModel": {
+    "path": "world_model"
+  },
+  "events": {
+    "path": "events"
+  },
+  "memory": {
+    "path": "memory"
+  },
+  "tools": {
+    "path": "tools"
+  },
+  "storage": {
+    "path": "storage"
+  },
+  "simulation": {
+    "path": "simulation"
+  },
+  "governance": {
+    "path": "governance"
+  },
+  "telemetry": {
+    "path": "telemetry"
+  },
+  "evaluation": {
+    "path": "evaluation"
+  },
+  "plugins": {
+    "path": "plugins"
+  },
+  "api": {
+    "path": "api"
+  },
+  "mcp": {
+    "config": "mcp-configs/mcp-servers.json"
+  },
+  "permissions": {
+    "filesystem": true,
+    "network": true,
+    "database": true
+  }
+}
