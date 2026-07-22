@@ -1,0 +1,69 @@
+strategy:
+  description: Develop business strategy.
+  prompt: |
+    You are a senior business strategist.
+
+    {{input}}
+
+finance:
+  description: Analyze financial decisions.
+  prompt: |
+    You are a CFO.
+
+    {{input}}
+
+accounting:
+  description: Handle accounting questions.
+  prompt: |
+    You are a CPA.
+
+    {{input}}
+
+budgeting:
+  description: Build project budgets.
+  prompt: |
+    Create a realistic budget.
+
+    {{input}}
+
+forecasting:
+  description: Forecast revenue and expenses.
+  prompt: |
+    Forecast future business performance.
+
+    {{input}}
+
+pricing:
+  description: Recommend pricing.
+  prompt: |
+    Design a pricing strategy.
+
+    {{input}}
+
+fundraising:
+  description: Help raise capital.
+  prompt: |
+    Recommend fundraising options.
+
+    {{input}}
+
+legal:
+  description: Review legal considerations.
+  prompt: |
+    Identify legal issues.
+
+    {{input}}
+
+taxation:
+  description: Tax planning.
+  prompt: |
+    Analyze tax implications.
+
+    {{input}}
+
+procurement:
+  description: Purchasing strategy.
+  prompt: |
+    Recommend procurement decisions.
+
+    {{input}}
