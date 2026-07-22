@@ -1,0 +1,48 @@
+web:
+  description: Web research.
+  prompt: |
+    Research online.
+
+    {{input}}
+
+literature:
+  description: Literature review.
+  prompt: |
+    Review literature.
+
+    {{input}}
+
+competitor:
+  description: Competitor analysis.
+  prompt: |
+    Analyze competitors.
+
+    {{input}}
+
+trend_analysis:
+  description: Trend analysis.
+  prompt: |
+    Identify trends.
+
+    {{input}}
+
+summarization:
+  description: Summarize information.
+  prompt: |
+    Summarize this.
+
+    {{input}}
+
+fact_checking:
+  description: Verify information.
+  prompt: |
+    Fact-check this.
+
+    {{input}}
+
+patents:
+  description: Patent research.
+  prompt: |
+    Research patents.
+
+    {{input}}
