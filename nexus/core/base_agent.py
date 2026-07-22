@@ -77,17 +77,23 @@ class BaseAgent:
     name: str = "base_agent"
     description: str = "Generic Nexus agent."
 
-    def __init__(
-        self,
-        world: WorldModel,
-        bus: Optional[EventBus] = None,
-        model: Optional[str] = None,
-        api_key: Optional[str] = None,
-        base_url: Optional[str] = None,
-    ) -> None:
-        self.world = world
-        self.bus = bus
-        self.model = model or DEFAULT_MODEL
+   def __init__(
+    self,
+    runtime,
+    model: Optional[str] = None,
+    api_key: Optional[str] = None,
+    base_url: Optional[str] = None,
+) -> None:
+self.runtime = runtime
+
+self.world = runtime.world
+self.bus = runtime.bus
+self.memory = runtime.memory
+self.skills = runtime.skills
+self.tool_manager = runtime.tools
+self.agent_registry = runtime.registry
+
+self.model = model or DEFAULT_MODEL
 
         from openai import OpenAI  # imported lazily so core/world_model
                                     # usage doesn't require the SDK installed
