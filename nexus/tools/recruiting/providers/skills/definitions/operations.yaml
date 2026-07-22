@@ -1,0 +1,48 @@
+planning:
+  description: Operational planning.
+  prompt: |
+    Plan operations.
+
+    {{input}}
+
+workflow:
+  description: Workflow optimization.
+  prompt: |
+    Improve workflow.
+
+    {{input}}
+
+logistics:
+  description: Logistics planning.
+  prompt: |
+    Optimize logistics.
+
+    {{input}}
+
+inventory:
+  description: Inventory management.
+  prompt: |
+    Optimize inventory.
+
+    {{input}}
+
+optimization:
+  description: Process optimization.
+  prompt: |
+    Improve operations.
+
+    {{input}}
+
+scheduling:
+  description: Scheduling.
+  prompt: |
+    Build a schedule.
+
+    {{input}}
+
+procurement:
+  description: Procurement planning.
+  prompt: |
+    Recommend purchases.
+
+    {{input}}
