@@ -1,21 +1,38 @@
-"""Agent registry for Nexus."""
+"""
+AgentRegistry — lets the orchestrator (or the marketplace, eventually)
+discover agents by name instead of importing each one directly. Agents
+register themselves via the @register_agent decorator.
+"""
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Type
+
+from nexus.core.base_agent import BaseAgent
+
 
 class AgentRegistry:
-    def __init__(self) -> None:
-        self._agents: dict[str, Any] = {}
+    _agents: dict[str, Type[BaseAgent]] = {}
 
-    def register(self, name: str, agent: Any) -> None:
-        self._agents[name] = agent
+    @classmethod
+    def register(cls, agent_cls: Type[BaseAgent]) -> Type[BaseAgent]:
+        cls._agents[agent_cls.name] = agent_cls
+        return agent_cls
 
-    def deregister(self, name: str) -> None:
-        self._agents.pop(name, None)
+    @classmethod
+    def get(cls, name: str) -> Type[BaseAgent]:
+        if name not in cls._agents:
+            raise KeyError(
+                f"No agent registered as '{name}'. Available: "
+                f"{list(cls._agents.keys())}"
+            )
+        return cls._agents[name]
 
-    def get(self, name: str) -> Any:
-        return self._agents.get(name)
+    @classmethod
+    def available(cls) -> list[str]:
+        return list(cls._agents.keys())
 
-    def all_agents(self) -> dict[str, Any]:
-        return dict(self._agents)
+
+def register_agent(agent_cls: Type[BaseAgent]) -> Type[BaseAgent]:
+    """Decorator form: @register_agent above a BaseAgent subclass."""
+    return AgentRegistry.register(agent_cls)
