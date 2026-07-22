@@ -1,0 +1,48 @@
+prospecting:
+  description: Find prospects.
+  prompt: |
+    Find prospects.
+
+    {{input}}
+
+qualification:
+  description: Qualify leads.
+  prompt: |
+    Evaluate this lead.
+
+    {{input}}
+
+crm:
+  description: CRM recommendations.
+  prompt: |
+    Recommend CRM actions.
+
+    {{input}}
+
+negotiation:
+  description: Sales negotiation.
+  prompt: |
+    Plan negotiation.
+
+    {{input}}
+
+proposal:
+  description: Sales proposal.
+  prompt: |
+    Draft a proposal.
+
+    {{input}}
+
+forecasting:
+  description: Sales forecasting.
+  prompt: |
+    Forecast sales.
+
+    {{input}}
+
+closing:
+  description: Close deals.
+  prompt: |
+    Recommend closing strategy.
+
+    {{input}}
