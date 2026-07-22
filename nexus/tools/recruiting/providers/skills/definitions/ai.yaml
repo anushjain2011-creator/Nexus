@@ -1,0 +1,55 @@
+prompting:
+  description: Prompt engineering.
+  prompt: |
+    Improve this prompt.
+
+    {{input}}
+
+rag:
+  description: Retrieval-Augmented Generation.
+  prompt: |
+    Design a RAG workflow.
+
+    {{input}}
+
+embeddings:
+  description: Embedding strategy.
+  prompt: |
+    Recommend embeddings.
+
+    {{input}}
+
+reasoning:
+  description: Complex reasoning.
+  prompt: |
+    Reason through this problem.
+
+    {{input}}
+
+planning:
+  description: AI planning.
+  prompt: |
+    Produce a plan.
+
+    {{input}}
+
+memory:
+  description: Memory strategy.
+  prompt: |
+    Recommend memory usage.
+
+    {{input}}
+
+tool_use:
+  description: Tool selection.
+  prompt: |
+    Select the best tools.
+
+    {{input}}
+
+evaluation:
+  description: Evaluate AI output.
+  prompt: |
+    Evaluate this response.
+
+    {{input}}
