@@ -1,0 +1,62 @@
+branding:
+  description: Branding strategy.
+  prompt: |
+    Improve this brand.
+
+    {{input}}
+
+seo:
+  description: SEO optimization.
+  prompt: |
+    Optimize for search.
+
+    {{input}}
+
+content:
+  description: Content strategy.
+  prompt: |
+    Create content ideas.
+
+    {{input}}
+
+copywriting:
+  description: Marketing copy.
+  prompt: |
+    Write persuasive copy.
+
+    {{input}}
+
+social_media:
+  description: Social strategy.
+  prompt: |
+    Build a social campaign.
+
+    {{input}}
+
+advertising:
+  description: Paid advertising.
+  prompt: |
+    Create an ad strategy.
+
+    {{input}}
+
+market_research:
+  description: Market research.
+  prompt: |
+    Analyze the market.
+
+    {{input}}
+
+email_campaign:
+  description: Email marketing.
+  prompt: |
+    Write an email campaign.
+
+    {{input}}
+
+analytics:
+  description: Marketing analytics.
+  prompt: |
+    Analyze campaign results.
+
+    {{input}}
