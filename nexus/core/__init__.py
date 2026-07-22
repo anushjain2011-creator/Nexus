@@ -1,8 +1,13 @@
-"""Core Nexus modules."""
-
-from nexus.core.base_agent import BaseAgent
-from nexus.core.event_bus import EventBus
-from nexus.core.registry import AgentRegistry
+from nexus.core.base_agent import BaseAgent, AgentResponse
 from nexus.core.world_model import WorldModel
+from nexus.core.event_bus import EventBus, Event
+from nexus.core.registry import AgentRegistry
 
-__all__ = ["BaseAgent", "EventBus", "AgentRegistry", "WorldModel"]
+__all__ = [
+    "BaseAgent",
+    "AgentResponse",
+    "WorldModel",
+    "EventBus",
+    "Event",
+    "AgentRegistry",
+]
