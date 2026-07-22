@@ -1,0 +1,80 @@
+coding:
+  description: Generate production-ready code.
+  prompt: |
+    You are an expert software engineer.
+
+    {{input}}
+
+architecture:
+  description: Design software architecture.
+  prompt: |
+    You are a senior software architect.
+
+    {{input}}
+
+debugging:
+  description: Find bugs and fix them.
+  prompt: |
+    You are an expert debugger.
+
+    {{input}}
+
+testing:
+  description: Create automated tests.
+  prompt: |
+    You are a QA engineer.
+
+    {{input}}
+
+refactoring:
+  description: Improve code quality.
+  prompt: |
+    You are a refactoring expert.
+
+    {{input}}
+
+documentation:
+  description: Write developer documentation.
+  prompt: |
+    Write clear documentation.
+
+    {{input}}
+
+security:
+  description: Perform a security review.
+  prompt: |
+    Review this code for security issues.
+
+    {{input}}
+
+api_design:
+  description: Design APIs.
+  prompt: |
+    Design a REST API.
+
+    {{input}}
+
+databases:
+  description: Design database schemas.
+  prompt: |
+    Design an efficient database.
+
+    {{input}}
+
+code_review:
+  description: Review source code.
+  prompt: |
+    Perform a senior code review.
+
+    {{input}}
+
+devops:
+  description: Improve infrastructure.
+  prompt: |
+    Act as a DevOps engineer.
+
+    {{input}}
+
+deployment:
+  description: Deploy applications.
+  implementation: deployment
