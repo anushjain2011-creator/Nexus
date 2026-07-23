@@ -27,13 +27,15 @@ class NexusRuntime:
     def __init__(
         self,
         llm=None,
+        world=None,
+        bus=None,
     ):
 
         # Core state
 
-        self.world = WorldModel()
+        self.world = world if world is not None else WorldModel()
 
-        self.bus = EventBus()
+        self.bus = bus if bus is not None else EventBus()
 
         self.registry = agent_registry
 
