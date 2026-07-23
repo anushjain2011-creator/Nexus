@@ -96,3 +96,5 @@ class MemoryManager:
     def clear(self):
 
         self.retrieval.clear()
+    
+memory_manager = MemoryManager()
