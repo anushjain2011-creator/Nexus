@@ -9,7 +9,8 @@ import pytest
 
 from nexus.core.world_model import WorldModel
 from nexus.core.event_bus import EventBus
-from nexus.core.registry import AgentRegistry
+from nexus.core.runtime import NexusRuntime
+from nexus.core.registry import AgentClassRegistry
 from nexus.agents.planning_agent import PlanningAgent
 from nexus.agents.research_agent import ResearchAgent
 from nexus.agents.finance_agent import FinanceAgent
@@ -26,6 +27,11 @@ def bus():
     return EventBus()
 
 
+@pytest.fixture
+def runtime(world, bus):
+    return NexusRuntime(world=world, bus=bus)
+
+
 def test_agents_registered():
     expected = {
         "planning_agent",
@@ -34,17 +40,17 @@ def test_agents_registered():
         "risk_agent",
         "executive_agent",
     }
-    assert expected.issubset(set(AgentRegistry.available()))
+    assert expected.issubset(set(AgentClassRegistry.available()))
 
 
-def test_planning_agent_tool_schema(world, bus):
-    agent = PlanningAgent(world, bus, api_key="test-key")
+def test_planning_agent_tool_schema(runtime):
+    agent = PlanningAgent(runtime, api_key="test-key")
     names = {t["name"] for t in agent.tools()}
     assert names == {"create_task", "update_task_status"}
 
 
-def test_finance_agent_tool_handles_spend(world, bus):
-    agent = FinanceAgent(world, bus, api_key="test-key")
+def test_finance_agent_tool_handles_spend(runtime, world):
+    agent = FinanceAgent(runtime, api_key="test-key")
     result = agent.handle_tool_call(
         "add_budget_line", {"category": "hardware", "allocated": 500}
     )
@@ -57,11 +63,11 @@ def test_finance_agent_tool_handles_spend(world, bus):
     assert world.budget_remaining() == 800
 
 
-def test_finance_agent_publishes_budget_exceeded(world, bus):
+def test_finance_agent_publishes_budget_exceeded(runtime, bus):
     received = []
     bus.subscribe("budget.exceeded", lambda e: received.append(e.payload))
 
-    agent = FinanceAgent(world, bus, api_key="test-key")
+    agent = FinanceAgent(runtime, api_key="test-key")
     agent.handle_tool_call(
         "record_spend", {"category": "hardware", "amount": 5000}
     )
@@ -69,8 +75,8 @@ def test_finance_agent_publishes_budget_exceeded(world, bus):
     assert len(received) == 1
 
 
-def test_risk_agent_logs_risk(world, bus):
-    agent = RiskAgent(world, bus, api_key="test-key")
+def test_risk_agent_logs_risk(runtime, world):
+    agent = RiskAgent(runtime, api_key="test-key")
     result = agent.handle_tool_call(
         "log_risk", {"description": "Supplier may fail", "severity": "high"}
     )
@@ -78,8 +84,8 @@ def test_risk_agent_logs_risk(world, bus):
     assert len(world.high_severity_risks()) == 1
 
 
-def test_research_agent_records_finding(world, bus):
-    agent = ResearchAgent(world, bus, api_key="test-key")
+def test_research_agent_records_finding(runtime, world):
+    agent = ResearchAgent(runtime, api_key="test-key")
     agent.handle_tool_call(
         "record_finding", {"note": "Motor X is cheaper than Motor Y"}
     )
