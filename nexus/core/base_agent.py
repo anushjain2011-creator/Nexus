@@ -1,4 +1,3 @@
-
 """
 BaseAgent — the shared contract every Nexus agent implements.
 
@@ -28,11 +27,6 @@ from typing import Any, Optional
 
 from nexus.core.world_model import WorldModel
 from nexus.core.event_bus import EventBus
-from pathlib import Path
-
-from nexus.skills import SkillManager
-from nexus.memory.manager import memory_manager
-from nexus.tools import tool_manager
 
 DEFAULT_MODEL = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 
@@ -77,23 +71,23 @@ class BaseAgent:
     name: str = "base_agent"
     description: str = "Generic Nexus agent."
 
-   def __init__(
-    self,
-    runtime,
-    model: Optional[str] = None,
-    api_key: Optional[str] = None,
-    base_url: Optional[str] = None,
-) -> None:
-self.runtime = runtime
+    def __init__(
+        self,
+        runtime,
+        model: Optional[str] = None,
+        api_key: Optional[str] = None,
+        base_url: Optional[str] = None,
+    ) -> None:
+        self.runtime = runtime
 
-self.world = runtime.world
-self.bus = runtime.bus
-self.memory = runtime.memory
-self.skills = runtime.skills
-self.tool_manager = runtime.tools
-self.agent_registry = runtime.registry
+        self.world = runtime.world
+        self.bus = runtime.bus
+        self.memory = runtime.memory
+        self.skills = runtime.skills
+        self.tool_manager = runtime.tools
+        self.agent_registry = runtime.registry
 
-self.model = model or DEFAULT_MODEL
+        self.model = model or DEFAULT_MODEL
 
         from openai import OpenAI  # imported lazily so core/world_model
                                     # usage doesn't require the SDK installed
@@ -102,21 +96,7 @@ self.model = model or DEFAULT_MODEL
             api_key=api_key or os.environ.get("OPENAI_API_KEY"),
             base_url=base_url or os.environ.get("OPENAI_BASE_URL"),
         )
-self.skills = SkillManager(
-            llm=self,
-        )
 
-        self.skills.load(
-            Path(__file__).parent.parent
-            / "skills"
-            / "definitions"
-        )
-
-        self.memory = memory_manager
-
-        self.tool_manager = tool_manager
-
-        self.agent_registry = None
     # ---- override in subclasses -------------------------------------------------
 
     def system_prompt(self) -> str:
@@ -143,7 +123,8 @@ self.skills = SkillManager(
         )
 
     # ---- shared execution flow -------------------------------------------------
-def generate(
+
+    def generate(
         self,
         prompt: str,
     ) -> str:
@@ -164,6 +145,7 @@ def generate(
         )
 
         return response.choices[0].message.content or ""
+
     def run(self, instruction: str, max_tool_turns: int = 5) -> AgentResponse:
         """Send `instruction` to the model with this agent's system prompt
         and tools, looping through any tool calls until the model produces
@@ -238,6 +220,7 @@ def generate(
             summary="Max tool turns reached without a final answer.",
             tool_calls=tool_calls_made,
         )
+
     def run_skill(
         self,
         name: str,
@@ -248,7 +231,6 @@ def generate(
             name,
             **kwargs,
         )
-
 
     def use_tool(
         self,
@@ -261,7 +243,6 @@ def generate(
             **kwargs,
         )
 
-
     def remember(
         self,
         text: str,
@@ -272,7 +253,6 @@ def generate(
             text=text,
             metadata=metadata or {},
         )
-
 
     def recall(
         self,
@@ -285,14 +265,12 @@ def generate(
             limit=limit,
         )
 
-
     def set_agent_registry(
         self,
         registry,
     ):
 
         self.agent_registry = registry
-
 
     def ask_agent(
         self,
@@ -320,7 +298,6 @@ def generate(
             instruction,
         )
 
-
     def publish_event(
         self,
         event: str,
@@ -333,7 +310,6 @@ def generate(
                 event,
                 **payload,
             )
-
 
     def capabilities(
         self,
