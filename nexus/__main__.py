@@ -1,8 +1,6 @@
 """Run Nexus."""
 
-from nexus.core.event_bus import EventBus
-from nexus.core.world_model import WorldModel
-from nexus.core.agent_registry import agent_registry
+from nexus.core.runtime import NexusRuntime
 
 from nexus.agents.executive_agent import ExecutiveAgent
 from nexus.agents.planning_agent import PlanningAgent
@@ -13,82 +11,41 @@ from nexus.agents.risk_agent import RiskAgent
 
 def main() -> None:
 
-    world = WorldModel()
+    runtime = NexusRuntime()
 
-    world.update(
+    runtime.world.update(
         {
-            "mission": "Deploy Nexus",
-            "goals": [
-                "Scope impact",
-                "Allocate budget",
-                "Mitigate risk",
-            ],
-            "query": "Market analysis",
-            "budget": "$50,000",
-            "risk": "Moderate",
+            "goal": "Deploy Nexus",
+            "deadline": None,
+            "budget": 50000.0,
         }
     )
 
-    bus = EventBus()
-
-    bus.subscribe(
+    runtime.bus.subscribe(
         "world.updated",
-        lambda data: print(f"[WORLD] {data}"),
+        lambda event: print(f"[WORLD] {event.payload}"),
     )
 
-    bus.subscribe(
+    runtime.bus.subscribe(
         "agent.result",
-        lambda data: print(f"[RESULT] {data}"),
+        lambda event: print(f"[RESULT] {event.payload}"),
     )
 
-    executive = ExecutiveAgent(
-        world,
-        bus,
-    )
+    executive = ExecutiveAgent(runtime)
+    planning = PlanningAgent(runtime)
+    research = ResearchAgent(runtime)
+    finance = FinanceAgent(runtime)
+    risk = RiskAgent(runtime)
 
-    planning = PlanningAgent(
-        world,
-        bus,
-    )
+    runtime.register_agent(executive)
+    runtime.register_agent(planning)
+    runtime.register_agent(research)
+    runtime.register_agent(finance)
+    runtime.register_agent(risk)
 
-    research = ResearchAgent(
-        world,
-        bus,
-    )
-
-    finance = FinanceAgent(
-        world,
-        bus,
-    )
-
-    risk = RiskAgent(
-        world,
-        bus,
-    )
-
-    agent_registry.register(
-        executive,
-    )
-
-    agent_registry.register(
-        planning,
-    )
-
-    agent_registry.register(
-        research,
-    )
-
-    agent_registry.register(
-        finance,
-    )
-
-    agent_registry.register(
-        risk,
-    )
-
-    bus.publish(
+    runtime.bus.publish(
         "world.updated",
-        world.get_state(),
+        **runtime.world.get_state(),
     )
 
     result = executive.run(
