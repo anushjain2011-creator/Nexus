@@ -10,7 +10,7 @@ import { useEffect, useState, useCallback } from 'react';
 import './tokens.css';
 import './dashboard.css';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:8000';
+const API_BASE = import.meta.env.VITE_API_BASE ?? '';
 const POLL_INTERVAL_MS = 2500;
 
 function useWorldState() {

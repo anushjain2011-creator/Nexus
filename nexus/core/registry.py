@@ -35,4 +35,4 @@ class AgentClassRegistry:
 
 def register_agent(agent_cls: Type[BaseAgent]) -> Type[BaseAgent]:
     """Decorator form: @register_agent above a BaseAgent subclass."""
-    return AgentRegistry.register(agent_cls)
+    return AgentClassRegistry.register(agent_cls)
