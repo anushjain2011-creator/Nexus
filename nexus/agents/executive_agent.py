@@ -58,7 +58,7 @@ class ExecutiveAgent(BaseAgent):
         tasks = []
 
         tasks.append({
-            "agent": "planning",
+            "agent": "planning_agent",
             "instruction": (
                 f"""
                 Project Goal: {goal}
@@ -75,7 +75,7 @@ class ExecutiveAgent(BaseAgent):
         if budget is not None:
 
             tasks.append({
-                "agent": "finance",
+                "agent": "finance_agent",
                 "instruction": (
                     f"""
                     Budget available:
@@ -88,7 +88,7 @@ class ExecutiveAgent(BaseAgent):
             })
 
         tasks.append({
-            "agent": "risk",
+            "agent": "risk_agent",
             "instruction": (
                 """
                 Review the project.
@@ -114,7 +114,7 @@ class ExecutiveAgent(BaseAgent):
         tasks = [
 
             {
-                "agent": "research",
+                "agent": "research_agent",
                 "instruction": (
                     f"""
                     Something happened:
@@ -127,7 +127,7 @@ class ExecutiveAgent(BaseAgent):
             },
 
             {
-                "agent": "planning",
+                "agent": "planning_agent",
                 "instruction": (
                     f"""
                     Something happened:
@@ -140,7 +140,7 @@ class ExecutiveAgent(BaseAgent):
             },
 
             {
-                "agent": "risk",
+                "agent": "risk_agent",
                 "instruction": (
                     f"""
                     Something happened:
