@@ -93,7 +93,7 @@ class BaseAgent:
                                     # usage doesn't require the SDK installed
 
         self.client = OpenAI(
-            api_key=api_key or os.environ.get("OPENAI_API_KEY"),
+            api_key=api_key or os.environ.get("API_KEY") or os.environ.get("OPENAI_API_KEY"),
             base_url=base_url or os.environ.get("OPENAI_BASE_URL"),
         )
 
@@ -157,12 +157,17 @@ class BaseAgent:
         tool_calls_made: list[dict[str, Any]] = []
         openai_tools = [_to_openai_tool(t) for t in self.tools()]
 
-        for _ in range(max_tool_turns):
+        for turn in range(max_tool_turns):
+            # Force at least one tool call on the first turn when tools exist,
+            # then switch to auto so the model can give a final text answer.
+            tool_choice = "required" if (openai_tools and turn == 0) else "auto"
+
             response = self.client.chat.completions.create(
                 model=self.model,
                 max_tokens=1500,
                 messages=messages,
                 tools=openai_tools or None,
+                tool_choice=tool_choice if openai_tools else None,
             )
 
             choice = response.choices[0].message
