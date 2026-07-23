@@ -146,6 +146,21 @@ class WorldModel:
     def high_severity_risks(self) -> list[Risk]:
         return [r for r in self.risks.values() if r.severity == "high"]
 
+    def update(self, values: dict[str, Any]) -> None:
+        """Apply a shallow dict of field updates, e.g. {'goal': ..., 'deadline': ...,
+        'budget': 1000}. Unknown keys are ignored."""
+        for key, value in values.items():
+            if key == "budget":
+                self.budget_total = value
+            elif hasattr(self, key):
+                setattr(self, key, value)
+        self._record("world.updated", values)
+
+    def get_state(self) -> dict[str, Any]:
+        """Alias for to_dict(), used by NexusRuntime/callers that want the
+        current world state as a plain dict."""
+        return self.to_dict()
+        
     def to_dict(self) -> dict[str, Any]:
         return {
             "goal": self.goal,
