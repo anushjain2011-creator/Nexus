@@ -11,7 +11,7 @@ from typing import Type
 from nexus.core.base_agent import BaseAgent
 
 
-class AgentRegistry:
+class AgentClassRegistry:
     _agents: dict[str, Type[BaseAgent]] = {}
 
     @classmethod
