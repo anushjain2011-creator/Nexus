@@ -1,0 +1,8 @@
+summarize:
+  description: "Summarize a block of text into a few key points."
+  prompt: "Summarize the following text into 3-5 concise bullet points:\n\n{text}"
+  version: "1.0.0"
+  author: "Nexus"
+  tags: ["text", "summarization"]
+  inputs: ["text"]
+  outputs: ["summary"]
